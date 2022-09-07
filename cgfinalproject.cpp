@@ -1,9 +1,5 @@
-// cgfinal.cpp : Defines the entry point for the console application.
-//
-
 //#include "stdafx.h"
 //#include "stdafx.h"
-
 #include<stdlib.h>
 #include<iostream>
 #include<GL/glut.h>
@@ -16,7 +12,6 @@ int parent[V];
 void find_spanning_tree();
 void find_spanning_tree_kruskal();
 void bitmap_output(int x, int y, char *string, void *font);
-
 //Global variables
 int pointer=0,point=0,line=0,lpointer=0,upointer=-1,undo_cost_stack_pointer=-1;
 int costmatrix[100][100],undo_cost_stack[100],lineundostack[100][100];
@@ -34,18 +29,15 @@ int ch=0;
 float oldx[100][100],linepoints[2][2],linex[100][4];
 float fade=0.1;
 GLfloat width=1000,height=720;
-
 //This functions writes the integer into char array
 void int_str(int rad,char r[])
 {
 	sprintf(r,"%d",rad);
 }
-
 //whenever undo function is called the cost is pushed into the stack
 void push(int n){
 	undo_cost_stack[++undo_cost_stack_pointer]=n;
 }
-
 //when redo function is called the cost is popped out
 int pop(){
 	if(undo_cost_stack_pointer>=0){
@@ -53,13 +45,13 @@ int pop(){
 	}
 	return 999;
 }
-
+//delay function
 void delay()
 {
 	int i=290000000;
 	while(i--);
 }
-
+//this function displays message when node created
 void msg_output()
 {
   glColor3f(1.0,0.0,0.0);
@@ -67,10 +59,7 @@ void msg_output()
   delay();
   delay();
   glFlush();//glutSwapBuffers();
-  
- 
 }
-
 void maximum_node_msg_output(){
   glColor3f(1.0,0.0,0.0);
   bitmap_output(30,20,"Maximum number of nodes reached",GLUT_BITMAP_HELVETICA_18);
@@ -80,52 +69,32 @@ void maximum_node_msg_output(){
   delay();
   delay();
 }
-
 //this function creates nodes using location stored in oldx[][] array
 void drawpoint(){
-
-	float angle=4.0f*3.1416f/360;
+    float angle=4.0f*3.1416f/360;
 	int radius=25;
 	for(int i=0;i<pointer;i++){
-
-/*glBegin(GL_TRIANGLES);     //Triangle shape node
-	glColor3f(1,1,0);
-	double angle1=0.0;
-	glBegin(GL_TRIANGLES); 
-	glVertex2d(oldx[i][0]-35,oldx[i][1]-20);
-	glVertex2d(oldx[i][0]+35,oldx[i][1]-20);
-	glVertex2d(oldx[i][0]+0,oldx[i][1]+30);*/
-	
-
 	glBegin(GL_POINTS);
 	glColor3f(0,0,1);
 	double angle1=0.0;
 	glBegin(GL_POLYGON);
 	glVertex2d(oldx[i][0]-radius*cos(0.0),radius*sin(0.0)+oldx[i][1]);
 	for(int j=0;j<360;j++){
-
-	glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
+    glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
 	angle1+=angle;
-	
+    }
+    glEnd();
 	}
-
-	glEnd();
-	}
-	
 	for(int i=0;i<pointer;i++){
 	glColor3f(1,0,0);
 	int_str(nodenum,num);
 	nodenum++;
 	bitmap_output(oldx[i][0]-5,oldx[i][1]-6,num,GLUT_BITMAP_TIMES_ROMAN_24);
 	}
-
-	 
-/*	if(nodenum>=1){
+    /*	if(nodenum>=1){
 		msg_output();
 	}*/
-
 }
-
 //This function prints text in graphics window
 void bitmap_output(int x, int y, char *string, void *font)
 {
@@ -141,7 +110,6 @@ void bitmap_output(int x, int y, char *string, void *font)
 	int i=290000000;
 	while(i--);
 }
-
 void msg_output()
 {
   glColor3f(1.0,0.0,0.0);
@@ -149,12 +117,8 @@ void msg_output()
   glFlush();//glutSwapBuffers();
   delay();
   delay();
- 
-}*/
-
-
-
-//this function displays staring window
+ }*/
+//this function displays introduction window
 void introduction_page()
 {
 glBegin(GL_POLYGON);
@@ -167,12 +131,8 @@ glVertex2d(width,height);
 glColor3f(0.0,0.0,1.0);
 glVertex2d(width,0);
 glEnd();
-	
-
-    glLineWidth(2);
+	glLineWidth(2);
 	glColor3f(0.5,1.0,1.0);
-	
-	
 	bitmap_output(width/3.1, height-height/10, "SDM Institute of Technology,  Ujire.",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(width/4.0, height-height/6, "Department Of Computer Science and Engineering.",GLUT_BITMAP_TIMES_ROMAN_24);
 	glColor3f(0.5,1.0,0.0);
@@ -180,18 +140,13 @@ glEnd();
 	bitmap_output(width/4+98, height-height/3.7, "MINIMUM COST SPANNING TREE",GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.0,0.0,1.0);
 	bitmap_output(width/4+58, height-height/3.7, "<<<<                                                            >>>>",GLUT_BITMAP_HELVETICA_18);
-	
-	
 	glColor3f(0.0,0.0,0.0);
 	bitmap_output(width/15+10,height-height/2.2,"Made by -",GLUT_BITMAP_HELVETICA_18);
-
-	glColor3f(1.0,1.0,1.0);
+    glColor3f(1.0,1.0,1.0);
 	bitmap_output(width/15+10,height-height/1.9,"Hithaish N (4SU19CS034)",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.7,"Jai Ganesh (4SU19CS035)",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.55,"Karthik (4SU19CS036)",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.42,"Karthik M C (4SU19CS037)",GLUT_BITMAP_HELVETICA_18);
-	
-	
 	glColor3f(0.0,0.0,0.0);
 	bitmap_output(width/15+595,height-height/1.8,"Guided by -",GLUT_BITMAP_HELVETICA_18);
 	glColor3f(1.0,1.0,1.0);
@@ -202,16 +157,12 @@ glEnd();
 	bitmap_output(width/5+270, 60, "Press 'ENTER' to continue",GLUT_BITMAP_TIMES_ROMAN_24);
 	glColor3f(1.0,0.0,0.0);
 	bitmap_output(width/5+400, 60, "                         >>>>>",GLUT_BITMAP_TIMES_ROMAN_24);
-	
 	glFlush();
 	delay();
-	
 }
-
+//this function displays instruction window
 void instruction_page()
 {
-
-
 glBegin(GL_POLYGON);
 glColor3f(0.38,0.17,1.0);
 glVertex2d(0,0);
@@ -222,24 +173,19 @@ glVertex2d(width,height);
 glColor3f(0.38,0.17,1.0);
 glVertex2d(width,0);
 glEnd();
-
-	glColor3f(1.0,0.0,0.0);
+    glColor3f(1.0,0.0,0.0);
 	bitmap_output(100, height-120, "INSTRUCTIONS --",GLUT_BITMAP_TIMES_ROMAN_24);
 	glColor3f(0.0,0.0,0.0);
 	bitmap_output(320, height-220, "* Press 'S' --> For Simulation. ",GLUT_BITMAP_TIMES_ROMAN_24);
-
-	bitmap_output(320, height-420, "* Press 'H' -->  For HELP.  ",GLUT_BITMAP_TIMES_ROMAN_24);
+    bitmap_output(320, height-420, "* Press 'H' -->  For HELP.  ",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(320, height-270, "* Press 'F' --> For Flowchart. ",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(320, height-320, "* Press 'W' --> Prim's algorithm. ",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(320, height-370, "* Press 'T' --> Kruskal's algorithm. ",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(320, height-470, "* Press 'ESC' --> To EXIT. ",GLUT_BITMAP_TIMES_ROMAN_24);
 	glColor3f(1.0,1.0,0.0);
 	bitmap_output(300, height-600, "***************~#~**************",GLUT_BITMAP_TIMES_ROMAN_24);
-	
 }
-
-
-//this function displays text instructions in grpahics windwow
+//this function displays draw instructions  windwow
 void draw_instructions()
 {
 	glBegin(GL_POLYGON);
@@ -249,7 +195,6 @@ void draw_instructions()
 	glVertex2d(0,height);
 	glColor3f(1.0,0.43,0.68);
 	glVertex2d(width,height);
-	//glColor3f(0.65,0.65,0.65);
 	glColor3f(0.48,0.41,1.0);
 	glVertex2d(width,0);
 	glEnd();
@@ -274,8 +219,7 @@ void draw_instructions()
 	glVertex2d(30,450);
 	glVertex2d(970,450);
 	glVertex2d(970,60);
-
-	glFlush();
+    glFlush();
 	glEnd();
 	glColor3f(0.0,0.0,0.0);
 	glBegin(GL_LINE_LOOP);
@@ -283,27 +227,22 @@ void draw_instructions()
 	glVertex2d(30,450);
 	glVertex2d(970,450);
 	glVertex2d(970,60);
-
-	glFlush();
+    glFlush();
 	glEnd();
 	glColor3f(1.0,0.0,0.0);
 	bitmap_output(650, height-700, "<<<<Press 'B' to go Back",GLUT_BITMAP_HELVETICA_18);
 }
-
+//displays help window
 void help_page()
 {
 	glBegin(GL_POLYGON);
-   // glColor3f(0.7,0.8,0.8);
 	glColor3f(0.9,0.82,0.9);
     glVertex2d(0,0);
 	glColor3f(0.132,0.560,0.560);
-    //glColor3f(0.32,0.49,0.46);
 	glVertex2d(0,height);
 	glColor3f(0.132,0.560,0.560);
-	//glColor3f(0.32,0.49,0.46);
 	glVertex2d(width,height);
-		glColor3f(0.9,0.82,0.9);
-	//glColor3f(1.0,1.0,1.0);
+    glColor3f(0.9,0.82,0.9);
 	glVertex2d(width,0);
 	glEnd();
 	glColor3f(1.0,1.0,0.0);
@@ -326,12 +265,10 @@ void help_page()
 	glVertex2d(450,170);
 	glFlush();
 	glEnd();
-
-	glColor3f(1.0,0.0,0.0);
+    glColor3f(1.0,0.0,0.0);
 	bitmap_output(300, height-205, "Keys",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(584, height-205, "Functions",GLUT_BITMAP_TIMES_ROMAN_24);
 	glColor3f(0.0,0.0,0.61);
-	
 	bitmap_output(300, height-280, "S or s                         - To start Simulation",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(300, height-310, "F or f                         - To see the Flowchart",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(300, height-340, "W or w                      - About prim's algorithm",GLUT_BITMAP_TIMES_ROMAN_24);
@@ -346,18 +283,14 @@ bitmap_output(width/15+650, height-680, "<<<<Press 'B' to go back",GLUT_BITMAP_H
 glColor3f(1.0,0.0,1.0);
 bitmap_output(420, height-630, "*****~#~*****",GLUT_BITMAP_TIMES_ROMAN_24);
 }
-
-
+//displays prim's algorithm
 void algorithmp()
 { 
 glBegin(GL_POLYGON);
 glColor3f(0.65,0.65,0.65);
-//glColor3f(1.0,0.43,0.78);
 glVertex2d(0,0);
 glColor3f(0.0,0.138,0.96);
-//glColor3f(0.65,0.65,0.65);
 glVertex2d(0,height);
-//glColor3f(1.0,0.43,0.78);
 glColor3f(0.65,0.65,0.65);
 glVertex2d(width,height);
 glColor3f(0.65,0.65,0.65);
@@ -378,16 +311,14 @@ bitmap_output(width/15+300, height-540, "**********~#~**********",GLUT_BITMAP_TI
 glColor3f(1.0,0.0,0.0);
 bitmap_output(width/15+650, height-650, "<<<<Press 'B' to go back",GLUT_BITMAP_HELVETICA_18);
 }
+//displays kruskal's algorithm 
 void algorithmk()
 {
 glBegin(GL_POLYGON);
 glColor3f(0.65,0.65,0.65);
-//glColor3f(1.0,0.43,0.78);
 glVertex2d(0,0);
 glColor3f(0.0,0.138,0.96);
-//glColor3f(0.65,0.65,0.65);
 glVertex2d(0,height);
-//glColor3f(1.0,0.43,0.78);
 glColor3f(0.65,0.65,0.65);
 glVertex2d(width,height);
 glColor3f(0.65,0.65,0.65);
@@ -406,9 +337,7 @@ glColor3f(0.0,1.0,0.0);
 bitmap_output(width/15+300, height-540, "**********~#~**********",GLUT_BITMAP_TIMES_ROMAN_24);
 glColor3f(1.0,0.0,0.0);
 bitmap_output(width/15+650, height-650, "<<<<Press 'B' to go back",GLUT_BITMAP_HELVETICA_18);
-
 }
-
 //flowchart
 void flowchart(){
 glLineWidth(2);
@@ -418,12 +347,10 @@ glVertex2d(0,0);
 glColor3f(0.0,0.13,0.96);
 glVertex2d(0,height);
 glColor3f(0.0,0.13,0.96);
-//glColor3f(0.65,0.65,0.65);
 glVertex2d(width,height);
 glColor3f(0.45,0.85,0.85);
 glVertex2d(width,0);
 glEnd();
-//heading
 glColor3f(0.0,1.0,1.0);
 bitmap_output(80, height-60, "FLOW CHART --",GLUT_BITMAP_TIMES_ROMAN_24);
 //introduction polygon
@@ -436,13 +363,11 @@ glVertex2i(395,560);
 glEnd();
 glColor3f(0.0,0.0,0.0);
 bitmap_output(425, 575, "Introduction page",GLUT_BITMAP_HELVETICA_18);
-//intro-instruction
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2i(497.5,560);
 glVertex2i(497.5,505);
 glEnd();
-
 //instruction polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
@@ -453,23 +378,12 @@ glVertex2i(395,465);
 glEnd();
 glColor3f(0.0,0.0,0.0);
 bitmap_output(430,480, "Instruction page",GLUT_BITMAP_HELVETICA_18);
-
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2f(498,440);
 glVertex2f(498,465);
 glEnd();
-
-//instruction-algo
-
-//instruction-end
-
-//instruction-help
-
-//instruction-simulation start
-
-
-//algorithm polygon
+//prim's algorithm polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(90,420);
@@ -480,8 +394,7 @@ glEnd();
 glColor3f(0.0,0.0,0.0);
 bitmap_output(125, 390, "Prim's",GLUT_BITMAP_HELVETICA_18);
 bitmap_output(110, 365, "Algorithm",GLUT_BITMAP_HELVETICA_18);
-
-//horizontal
+//horizontal line
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2f(150,440);
@@ -492,9 +405,7 @@ glBegin(GL_LINES);
 glVertex2f(150,440);
 glVertex2f(150,420);
 glEnd();
-
-
-//help polygon
+//flowchart polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(235,405);
@@ -509,7 +420,6 @@ glBegin(GL_LINES);
 glVertex2f(305,440);
 glVertex2f(305,405);
 glEnd();
-
 //start simulation polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
@@ -525,11 +435,7 @@ glBegin(GL_LINES);
 glVertex2f(498,440);
 glVertex2f(498,405);
 glEnd();
-
-//simulation start-draw graph
-
-
-//End polygon
+//kruskal's algorithm polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(650,420);
@@ -545,7 +451,7 @@ glBegin(GL_LINES);
 glVertex2f(715,440);
 glVertex2f(715,420);
 glEnd();
-
+//help polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(800,405);
@@ -560,7 +466,7 @@ glBegin(GL_LINES);
 glVertex2f(840,440);
 glVertex2f(840,405);
 glEnd();
-
+//exit polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(900,405);
@@ -581,8 +487,6 @@ glBegin(GL_LINES);
 glVertex2f(498,365);
 glVertex2f(498,275);
 glEnd();
-
-
 //simulation polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
@@ -595,15 +499,12 @@ glColor3f(0.0,0.0,0.0);
 bitmap_output(453, 250, "Draw Node",GLUT_BITMAP_HELVETICA_18);
 bitmap_output(453, 220, "Draw Edge",GLUT_BITMAP_HELVETICA_18);
 bitmap_output(453, 190, "Draw Graph",GLUT_BITMAP_HELVETICA_18);
-
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2f(498,175);
 glVertex2f(498,145);
 glEnd();
-
-
-//start simulation polygon
+//output polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
 glVertex2i(395,145);
@@ -613,22 +514,16 @@ glVertex2i(395,105);
 glEnd();
 glColor3f(0.0,0.0,0.0);
 bitmap_output(470, 120, "Output",GLUT_BITMAP_HELVETICA_18);
-
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2f(498,105);
 glVertex2f(498,75);
 glEnd();
 
-
-
-//draw graph-output 55 940
-
 glColor3f(1.0,1.0,1.0);
 glBegin(GL_LINES);
 glVertex2f(600,55);
 glVertex2f(940,55);
-
 glEnd();
 
 glColor3f(1.0,1.0,1.0);
@@ -636,8 +531,6 @@ glBegin(GL_LINES);
 glVertex2f(940,55);
 glVertex2f(940,365);
 glEnd();
-
-
 //Exit polygon
 glColor3f(0.9,0.72,0.9);
 glBegin(GL_POLYGON);
@@ -649,14 +542,10 @@ glEnd();
 glColor3f(0.0,0.0,0.0);
 bitmap_output(485,50, "Exit",GLUT_BITMAP_HELVETICA_18);
 
-//back button text
 glColor3f(1.0,0.0,0.0);
 bitmap_output(90, height-680, "<<<<Press 'B' to go Back",GLUT_BITMAP_HELVETICA_18);
-
 }
-
-
-//this function draws edges using location stored in linex array
+//this function draws edges
 void drawline(){
 	glColor3f(1.0,0.0,1.0);
 	glLineWidth(4.0);
@@ -676,8 +565,6 @@ void drawline(){
 	}
 	glFlush();//glutSwapBuffers();
 }
-
-
 //this displays a point when mouse clicked for first time in draw edge mode
 void drawPointAt(float x,float y){
 	glPointSize(15);
@@ -687,10 +574,7 @@ void drawPointAt(float x,float y){
 	glEnd();
 
 }
-
-
-
-//this function displays text output after calculating spanning tree
+//this function displays output after calculating spanning tree
 void output(int ch){
 glBegin(GL_POLYGON);
 glColor3f(0.48,0.41,1.0);
@@ -708,11 +592,8 @@ glColor3f(0.85,0.85,0.85);
 	glVertex2d(30,450);
 	glVertex2d(970,450);
 	glVertex2d(970,60);
-
-	glFlush();
+    glFlush();
 	glEnd();
-
-    
     int xaxis = 250,yaxis=550;
     glColor3f(1.0,1.0,0.0);
 	if(ch==0){
@@ -723,7 +604,6 @@ glColor3f(0.85,0.85,0.85);
 	}
 	glColor3f(0.0,1.0,0.0);
 	bitmap_output(50,600,"OUTPUT --",GLUT_BITMAP_TIMES_ROMAN_24);
-	//glColor3f(0.658824,0.658824,0.658824);
     glColor3f(1.0,0.0,1.0);
 	bitmap_output(xaxis,yaxis,"Costs of Minimum spanning tree :",GLUT_BITMAP_HELVETICA_18);
 	char* buffer=new char[50];
@@ -747,13 +627,9 @@ glColor3f(0.85,0.85,0.85);
 	strcat(sumchar,buffer);
 	bitmap_output(xaxis,yaxis-20,sumchar,GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.0,0.0,0.0);
-
-
-	//output graph
-
-	//Node Drawing
-
-	float angle=4.0f*3.1416f/360;
+    //output graph
+    //Node Drawing
+    float angle=4.0f*3.1416f/360;
 	int radius=25;
 	for(int i=0;i<pointer;i++){
 	glBegin(GL_POINTS);
@@ -761,12 +637,9 @@ glColor3f(0.85,0.85,0.85);
 	double angle1=0.0;
 	glBegin(GL_POLYGON);
 	glVertex2d(oldx[i][0]-radius*cos(0.0),radius*sin(0.0)+oldx[i][1]);
-	
 	for(int j=0;j<360;j++){
-
-	glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
+    glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
 	angle1+=angle;
-	
 	}
 	glEnd();
 	}
@@ -777,45 +650,19 @@ glColor3f(0.85,0.85,0.85);
 	nodenum++;
 	bitmap_output(oldx[i][0]-5,oldx[i][1]-6,num,GLUT_BITMAP_TIMES_ROMAN_24);
 	}
-
-
-
-	//EDGE DRAWING
-
-
-	delay();
+    //EDGE DRAWING
+    delay();
 	glLineWidth(3.0);
 	for(int i=0;i<pointer-1;i++){
-	/*glColor3f(0.0,0.0,1.0);
-
-
-	glBegin(GL_LINES);
-	glVertex2i(oldx[t[i][0]][0],oldx[t[i][0]][1]);
-	glVertex2i(oldx[t[i][1]][0],oldx[t[i][1]][1]);
-	glEnd();
-	delay();
-	glFlush();//glutSwapBuffers();*/
-	// glutPostRedisplay();
 	glColor3f(0.0,0.0,1.0);
 	glBegin(GL_LINES);
 	glVertex2i(oldx[t[i][0]][0],oldx[t[i][0]][1]);
 	glVertex2i(oldx[t[i][1]][0],oldx[t[i][1]][1]);
 	delay();
 	glEnd();
-	/*int temp;
-	char* cst = new char[5];
-	glColor3f(0.0,1.0,0.0);
-	for(int i=0;i<lpointer-1;i++){
-		temp=costmatrix[t[i][0]][t[i][1]];
-		itoa(temp,cst,10);
-		bitmap_output((oldx[t[i][0]][0]+oldx[t[i][1]][0])/2-15,(oldx[t[i][0]][1]+oldx[t[i][1]][1])/2+8,cst,GLUT_BITMAP_TIMES_ROMAN_24);
-	}*/
 	glFlush();//glutSwapBuffers();
 	}   
-
-	
 }
-
 //This is callback function called by OpenGL 
 void display(){
 	nodenum=0;
@@ -826,9 +673,7 @@ void display(){
 	gluOrtho2D(0,width,0,height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-
-	 if(!start){
+	if(!start){
 		if(enterpressed)
 		{
 		   instruction_page();
@@ -845,15 +690,12 @@ void display(){
 		   else if(show_flowchart){
 			   flowchart();
 		   }
-		   
 		}
 		else{
 		//glLineWidth(25);
 		introduction_page();
 		}	
 	}
-	
-	
 	else if(start){
 			if(!found){
 				draw_instructions();
@@ -862,22 +704,18 @@ void display(){
 	 		}
 	       glPointSize(40);
 		   drawpoint();
-		   
-	       if(sx!=-1&&sy!=-1){
+		   if(sx!=-1&&sy!=-1){
 	       drawPointAt(sx,sy);
 	      }
-		  
-	      if(!found)
+		  if(!found)
 	      drawline();
 	if(found){
 	output(ch);
 	//blinking_lines();
 	}
 	}
-	
 	glFlush();//glutSwapBuffers();
 }
-
 //this is reshape callback function called by OpenGL whenever window is resized
 void reshape(int w, int h)
 {
@@ -893,8 +731,6 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 }
-
-
 //this function takes cost input from user during edge drawing
 void input(){
 	int posi=-1,posj=-1;
@@ -923,15 +759,13 @@ void input(){
 		delay();
 	lpointer--;
 	}else{
-
-	cout<<"Enter the cost:";
+    cout<<"Enter the cost:";
 	cin>>cost;
 	lineundostack[lpointer][0]=posi;
 	lineundostack[lpointer][1]=posj;
 	costmatrix[posi][posj]=costmatrix[posj][posi]=cost;
 	}
 }
-
 //this is mouse callback function called by OpenGL whenever mouse event occurs
 void mousefun(int button,int state,int x,int y){
 	found=0;
@@ -952,8 +786,7 @@ void mousefun(int button,int state,int x,int y){
 		    msg_output();
 			}
 		}
-
-		if(line){
+        if(line){
 			if(f==0){
 			linex[lpointer][0]=xp;
 			linex[lpointer][1]=yp;
@@ -975,7 +808,6 @@ void mousefun(int button,int state,int x,int y){
 	  }
 	}
 }
-
 //this function will print matrix constructed
 void printmatrix(){
 	for(int i=0;i<pointer;i++){
@@ -985,7 +817,6 @@ void printmatrix(){
 		cout<<endl;
 	}
 }
-
 //this checks if the graph is connected or not
 bool isconnected(){
 	int count;
@@ -1000,7 +831,6 @@ bool isconnected(){
 	}
 	return true;
 }
-
 //this undo the drawing in the order the graph was drawn
 void undo(){
 	if(pointer>0&&undostack[upointer--]=='p'){
@@ -1014,7 +844,6 @@ void undo(){
 		     undone++;
 	}
 }
-
 //this redo the drawing in the order the graph was drawn
 void redo(){
 	if(undone){
@@ -1031,7 +860,6 @@ void redo(){
 		   }
        }
 }
-
 //this will call find_spanning_tree function if graph is connected
 void find(char choice){
 	if(isconnected()){
@@ -1052,21 +880,18 @@ void find(char choice){
 	//	cout<<"spanning tree doesn't exist"<<endl;
 	 }
 }
-
 //this will select edge draw mode 
 void selectedge(){
      strcpy(text,"Draw mode: Edge");
 	 line=1;
      point=0;
 }
-
 //this will select node draw mode 
 void selectnode(){
 	strcpy(text,"Draw mode: Node");
     point=1;
 	line=0;
 }
-
 //this is keyboard callback function called by OpenGL whenever keyboard event occurs
 void keyboardfun(unsigned char key,int x,int y){
 	sx=-1;sy=-1;
@@ -1087,8 +912,6 @@ void keyboardfun(unsigned char key,int x,int y){
 				   show_flowchart=false;
 			       back=true;
 				   break;
-		 
-		 
 		 case 'e':
 		 case 'E':found=0;
 			      selectedge();
@@ -1107,11 +930,6 @@ void keyboardfun(unsigned char key,int x,int y){
 		 case 'y':found=0;
 			      redo();
 			      break;
-		 
-		 /*case 'D':
-		 case 'd':found=0;
-			      find();
-			      break;*/
 		case 'K':
 		 case 'k':found=0;
 			      find('K');
@@ -1147,7 +965,6 @@ void keyboardfun(unsigned char key,int x,int y){
 	}
 		glutPostRedisplay();
 }
-
 //this is menu callback function called by OpenGL as menu function
 void menu(int id){
 	switch(id){
@@ -1171,14 +988,14 @@ void menu(int id){
 	glutPostRedisplay();
 
 }
+//kruskal's
 int findKruskal(int i)
 {
     while (parent[i] != i)
         i = parent[i];
     return i;
 }
- 
-// Does union of i and j. It returns
+ // Does union of i and j. It returns
 // false if i and j are already in same
 // set.
 void union1(int i, int j)
@@ -1187,7 +1004,7 @@ void union1(int i, int j)
     int b = findKruskal(j);
     parent[a] = b;
 }
-//this function calculates spanning tree using Prim's algorithm
+//this function calculates spanning tree using kruskal's algorithm
 void find_spanning_tree_kruskal(){
 	int mincost = 0; // Cost of min MST.
 	int k=0;
@@ -1196,8 +1013,7 @@ void find_spanning_tree_kruskal(){
 	bitmap_output(10,560,"Kruskal",GLUT_BITMAP_HELVETICA_18);
     for (int i = 0; i < V; i++)
         parent[i] = i;
-	
-    // Include minimum weight edges one by one
+	// Include minimum weight edges one by one
     int edge_count = 0;
     while (edge_count < V - 1) {
         int min = INT_MAX, a = -1, b = -1;
@@ -1222,8 +1038,6 @@ void find_spanning_tree_kruskal(){
 	totalcost=mincost;
     printf("\n Minimum cost= %d \n", mincost);
 }
-//Prim's
-
 //this function calculates spanning tree using Prim's algorithm
 void find_spanning_tree(){
 	int k,u,v;
@@ -1242,8 +1056,7 @@ void find_spanning_tree(){
 		   }
 	}
 	}
-
-	for(int i=0;i<pointer;i++){
+    for(int i=0;i<pointer;i++){
 		d[i]=costmatrix[source][i];
 		p[i]=source;
 		s[i]=0;
@@ -1281,7 +1094,6 @@ void find_spanning_tree(){
 	found=1;
 	}
 }
-
 //Program execution starts from here
 int main(int argc,char** argv){
 	for(int i=0;i<10;i++){
